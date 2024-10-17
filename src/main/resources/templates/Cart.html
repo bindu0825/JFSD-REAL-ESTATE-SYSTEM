@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Estate Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .menu-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .property-scroll {
+            padding: 20px;
+        }
+        .property-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 10px;
+        }
+        .property-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .property-item h3 {
+            margin: 10px 0;
+        }
+        .property-item p {
+            margin: 5px 0;
+        }
+        .property-item .buy-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .property-item .buy-button:hover {
+            background-color: #218838;
+        }
+        /* Flexbox Grid for Properties */
+        .scroll-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .property-item {
+            width: 22%;
+            margin: 10px;
+            box-sizing: border-box;
+        }
+        /* Search Bar Styling */
+        .search-bar {
+            width: 50%;
+            padding: 10px;
+            margin: 20px auto;
+            display: block;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li sec:authorize="isAuthenticated"><a th:href="@{/Products}">Products</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li sec:authorize="isAuthenticated"><a href="cart.html">Cart</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br><br>
+
+    <header>
+        <h1>Real Estate Products</h1>
+    </header>
+
+    <!-- Search Bar -->
+    <input type="text" class="search-bar" placeholder="Search for properties..." id="searchInput" onkeyup="searchFunction()">
+
+    <div class="container">
+        <div class="property-scroll">
+            <div class="scroll-content" id="propertyList">
+                <!-- Property 1 -->
+                <div class="property-item">
+                    <img src="https://myersjackson.com/wp-content/uploads/2020/06/minimal-hero-05.jpg" alt="Property 1">
+                    <h3>Property Name 1</h3>
+                    <p>Price: $250,000</p>
+                    <button class="buy-button" onclick="showModal('Property Name 1', 250000)">Buy Now</button>
+                </div>
+                <!-- Property 2 -->
+                <div class="property-item">
+                    <img src="https://tse2.mm.bing.net/th?id=OIP.BW0-AXXLai008Wb1IdkWWQHaEo&pid=Api&P=0&h=180" alt="Property 2">
+                    <h3>Property Name 2</h3>
+                    <p>Price: $450,000</p>
+                    <button class="buy-button" onclick="showModal('Property Name 2', 450000)">Buy Now</button>
+                </div>
+                <!-- Property 3 -->
+                <div class="property-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYNksZ2Un2m9IPdZqYIKaL-N1e8t_DMr8BJg&usqp=CAU" alt="Property 3">
+                    <h3>Property Name 3</h3>
+                    <p>Price: $300,000</p>
+                    <button class="buy-button" onclick="showModal('Property Name 3', 300000)">Buy Now</button>
+                </div>
+                <!-- Property 4 -->
+                <div class="property-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYNksZ2Un2m9IPdZqYIKaL-N1e8t_DMr8BJg&usqp=CAU" alt="Property 4">
+                    <h3>Property Name 4</h3>
+                    <p>Price: $350,000</p>
+                    <button class="buy-button" onclick="showModal('Property Name 4', 350000)">Buy Now</button>
+                </div>
+                <!-- Additional properties can be added below in the same format -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Product Details -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalProductName"></h2>
+            <p id="modalProductPrice"></p>
+            <button id="addToCartButton">Add to Cart</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function showModal(productName, price) {
+            document.getElementById('modalProductName').innerText = productName;
+            document.getElementById('modalProductPrice').innerText = `Price: $${price.toFixed(2)}`;
+            document.getElementById('productModal').style.display = "block";
+
+            // Set up the addToCart button to call addToCart with the correct parameters
+            document.getElementById('addToCartButton').onclick = function() {
+                addToCart(productName, price);
+            };
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = "none";
+        }
+
+        function addToCart(productName, price) {
+            const item = { name: productName, price: price };
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${productName} has been added to your cart.`);
+            closeModal();
+        }
+
+        // Search function to filter properties (to be implemented)
+        function searchFunction() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const propertyItems = document.querySelectorAll('.property-item');
+
+            propertyItems.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    item.style.display = "";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+    <!-- Include jQuery and Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
